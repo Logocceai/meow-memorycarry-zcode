@@ -1,5 +1,7 @@
 ---
-updated: <初始化日期>
+summary: 环境约束、关键路径与可复用命令
+created: <初始化时间 YYYY-MM-DD HH:MM>
+updated: <最后更新时间>
 status: active
 ---
 

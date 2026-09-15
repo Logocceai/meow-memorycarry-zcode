@@ -6,13 +6,13 @@ argument-hint: "[tidy]"
 
 # 会话交接(meow-handoff)
 
-把本窗口有价值的信息**总结后规范化带走**:合并进分层记忆文件、生成一份交接快照、归档旧快照。记忆库位于当前仓库根 `.zcode/memory/`,条目格式、行数上限、生命周期一律遵循本技能目录下 `docs/format-spec.md`(下称"规范")。
+把本窗口有价值的信息**总结后规范化带走**:合并进分层记忆文件、生成一份交接快照、归档旧快照。记忆库位于当前仓库根 `.zcode/memory/`,条目格式、frontmatter、命名与行数上限一律遵循本技能目录下 `docs/format-spec.md`(下称"规范")。
 
 ## 执行流程
 
 1. **定位记忆库**
    - 记忆库 = 当前仓库根的 `.zcode/memory/`。
-   - 不存在时:从本技能目录 `templates/` 初始化——复制 INDEX.md、project.md、facts.md、decisions.md、lessons.md 到记忆库根,创建空的 `handoffs/` 与 `archive/`,frontmatter 占位 `<初始化日期>` 替换为当天日期。
+   - 不存在时:从本技能目录 `templates/` 初始化——复制 INDEX.md、project.md、facts.md、decisions.md、lessons.md 到记忆库根,创建空的 `handoffs/` 与 `archive/`,frontmatter 占位(`<初始化时间>`、`<最后更新时间>`)替换为当天时间。
 
 2. **tidy 分支**:参数为 `tidy` 时跳到第 8 步;否则走收尾交接。
 
@@ -20,11 +20,12 @@ argument-hint: "[tidy]"
    - `git status` 有未提交的代码改动:提示用户先执行 `/checkpoint`(记忆库只存知识与状态,不存代码),用户明确跳过才继续。
    - `.zcode/plans/` 中有本会话相关的 plan 文件:记下路径,写入快照 Refs。
 
-4. **回顾本窗口**,提炼四类信息——这是产出质量的根源,宁缺毋滥:
+4. **回顾本窗口,提炼四类信息与一句话概括**——这是产出质量的根源,宁缺毋滥:
    - 完成:做了什么,改动落在哪些文件与提交
    - 决策:拍板了什么,为什么
    - 坑:踩了什么,怎么解决的
    - 下一步:任务断点在哪,新会话第一件事做什么
+   - **概括**:给本次交接提炼一句话(建议 ≤20 字,如"记忆库初始化与v1实现"),它将同时充当快照文件名、正文标题与 frontmatter `summary`
 
    每条信息按规范 §2 压缩后再入库:一条一事、`[YYYY-MM-DD]` 日期前缀、自包含(写具体路径/命令/hash,不写"刚才那个问题")、总结体、中文。
 
@@ -33,14 +34,14 @@ argument-hint: "[tidy]"
    - `facts.md`:只新增可复用事实,已有条目不重复写
    - `decisions.md`:只追加新决策(append-only)
    - `lessons.md`:追加新教训
-   - 每个文件写入前对照规范 §5 行数上限(120 行),超限先合并同类、删被取代的旧条目,再写入
+   - 每个文件写入前对照规范 §5 行数上限(120 行),超限先合并同类、删被取代的旧条目,再写入;`updated` 同步刷新
 
-6. **写交接快照** `handoffs/YYYYMMDD-HHMM-<topic>.md`(topic 用小写英文连字符),结构按 `templates/handoff-snapshot.md` 六节:Summary / Done / Decisions / Pitfalls / Next / Refs,全文件 ≤150 行;frontmatter `status: active`。
+6. **写交接快照** `handoffs/<概括>.memo.md`(命名与非法字符清理规则见规范 §4),结构按 `templates/handoff-snapshot.md` 六节:Summary / Done / Decisions / Pitfalls / Next / Refs,全文件 ≤150 行;frontmatter 四字段:`summary`(与文件名、正文标题同源)、`created`、`updated`、`status: active`。
 
 7. **吸收与归档旧快照**
-   - 对每份旧的 `status: active` 快照:其中仍有长期价值的信息(事实/决策/教训)确保已合并进对应分层文件,然后把该快照 frontmatter改为 `status: absorbed`(内容已在分层文件中的旧快照直接标 absorbed)。
-   - `absorbed` 且 `updated` 距今超过 14 天的:`git mv handoffs/<文件> archive/`。只移动,不删除。
-   - 重写 INDEX.md:活跃任务 ≤5、下一步 ≤3、最近快照 ≤5,全文件 ≤80 行。
+   - 对每份旧的 `status: active` 快照:其中仍有长期价值的信息(事实/决策/教训)确保已合并进对应分层文件,然后把该快照 frontmatter 改为 `status: absorbed`(内容已在分层文件中的旧快照直接标 absorbed)。
+   - `absorbed` 且 `created` 距今超过 14 天的:`git mv handoffs/<文件> archive/`。只移动,不删除。
+   - 重写 INDEX.md:活跃任务 ≤5、下一步 ≤3、最近快照 ≤5(按 created 倒序),全文件 ≤80 行。
 
 8. **整理模式**(仅 `tidy`):去重并合并分层文件条目、执行行数上限、把所有 `absorbed` 超 14 天的快照 `git mv` 进 `archive/`、重建 INDEX.md。不新增任何记忆内容。
 

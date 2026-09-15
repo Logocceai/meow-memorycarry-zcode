@@ -21,12 +21,16 @@
 
 ```yaml
 ---
-updated: 2026-09-15
+summary: 记忆库初始化与v1实现
+created: 2026-09-15 08:27
+updated: 2026-09-15 08:27
 status: active
 ---
 ```
 
-- `updated`:最后写入日期,写一次更新一次。
+- `summary`:一句话概括文件内容(建议 ≤20 字)。快照的 `summary` 必须与正文标题、文件名三者同源;分层文件用一句话概括当前内容。
+- `created`:创建时间 `YYYY-MM-DD HH:MM`。**快照列表排序一律按此字段**,与文件名无关。
+- `updated`:最后写入时间,写一次更新一次。
 - `status`:分层文件恒为 `active`;快照可为 `active` / `absorbed`(内容已合并进分层文件)/ `archived`(已移入 archive/)。
 
 分层文件正文按小节组织,每个记忆条目遵守:
@@ -49,7 +53,7 @@ status: active
 
 ## 4. 交接快照(handoffs/)
 
-文件名:`YYYYMMDD-HHMM-<主题>.md`,主题为小写英文连字符,如 `20260915-1530-memory-format.md`。
+文件名:`<概括>.memo.md`,如 `记忆库初始化与v1实现.memo.md`。概括即正文标题与 frontmatter `summary`,一句话建议 ≤20 字;清理文件系统非法字符(`/ \ : * ? " < > |` 与换行),空格转连字符;概括重复时在末尾加 `-2` 序号区分。时间**不进文件名**——排序一律按 frontmatter `created`,文件名只负责可读。概括使用记忆条目语言(中文),快照文件名是仓库 kebab-case 规范的插件内例外。`.memo.md` 双后缀用于一眼识别记忆文件与 `ls *.memo.md` 过滤。
 
 快照固定六节模板(见 `templates/handoff-snapshot.md`),顺序不得改动:
 
@@ -76,7 +80,7 @@ status: active
 
 1. 新快照写入时为 `active`。
 2. `/handoff` 写入新快照的同时,把旧 `active` 快照中仍然长期有效的信息(事实、决策、教训)合并进对应分层文件,然后把这些快照 frontmatter 的 `status` 改为 `absorbed`。
-3. `absorbed` 且超过 14 天的快照,在下次 `/handoff` 时用 `git mv` 移入 `archive/`。**只移动,不删除**——历史由 git 保留。
+3. `absorbed` 且 `created` 距今超过 14 天的快照,在下次 `/handoff` 时用 `git mv` 移入 `archive/`。**只移动,不删除**——历史由 git 保留。
 4. `/handoff tidy`(整理模式)可随时手动触发:去重分层文件、合并同类条目、强制执行行数上限、批量归档过期快照、重建 INDEX.md。
 
 分层文件永不移入 archive;过期内容直接改写或删除条目本身(条目级内容更新属于编辑,不属于删除文件)。

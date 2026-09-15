@@ -1,5 +1,7 @@
 ---
-updated: <初始化日期>
+summary: 踩坑记录:现象、根因与规避方式
+created: <初始化时间 YYYY-MM-DD HH:MM>
+updated: <最后更新时间>
 status: active
 ---
 

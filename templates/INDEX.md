@@ -1,5 +1,7 @@
 ---
-updated: <初始化日期>
+summary: 记忆库索引,活跃任务与最近快照指针
+created: <初始化时间 YYYY-MM-DD HH:MM>
+updated: <最后更新时间>
 status: active
 ---
 
@@ -21,6 +23,6 @@ status: active
 
 ## 最近快照
 
-<!-- 最多 5 条,新在上。格式:- [YYYY-MM-DD HH:MM] handoffs/<文件名> — 一句话主题 -->
+<!-- 最多 5 条,按 created 倒序。格式:- [YYYY-MM-DD HH:MM] handoffs/<概括>.memo.md — 状态 -->
 
 (暂无)
