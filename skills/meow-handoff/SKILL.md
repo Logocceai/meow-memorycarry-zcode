@@ -40,14 +40,14 @@ argument-hint: "[tidy]"
 
 7. **吸收与归档旧快照**
    - 对每份旧的 `status: active` 快照:其中仍有长期价值的信息(事实/决策/教训)确保已合并进对应分层文件,然后把该快照 frontmatter 改为 `status: absorbed`(内容已在分层文件中的旧快照直接标 absorbed)。
-   - `absorbed` 且 `created` 距今超过 14 天的:`git mv handoffs/<文件> archive/`。只移动,不删除。
-   - 重写 INDEX.md:活跃任务 ≤5、下一步 ≤3、最近快照 ≤5(按 created 倒序),全文件 ≤80 行。
+   - `absorbed` 且 `created` 距今超过 14 天的:`git mv handoffs/<文件> archive/` 并把 `status` 改为 `archived`。只移动,不删除。
+   - 重写 INDEX.md:活跃任务 ≤5 与下一步 ≤3 依据第 4 步提炼刷新;本次新快照加入"最近快照"列表(≤5 条,按 created 倒序);全文件 ≤80 行。
 
 8. **整理模式**(仅 `tidy`):去重并合并分层文件条目、执行行数上限、把所有 `absorbed` 超 14 天的快照 `git mv` 进 `archive/`、重建 INDEX.md。不新增任何记忆内容。
 
 9. **入库与报告**
    - 仓库由 git 跟踪时:`git add .zcode/memory/`(不自动 commit,提交由用户走 `/checkpoint`)。
-   - 输出报告:新建/更新的文件、归档的快照、INDEX 当前的活跃任务与下一步。
+   - 输出报告:新建/更新的文件、归档的快照、INDEX 当前的活跃任务与下一步;结尾提示"新窗口可用 `/recall` 载入本快照继续"。
 
 ## 边界
 

@@ -13,7 +13,7 @@
 | 指令 | 时机 | 做什么 |
 |---|---|---|
 | `/handoff` | 会话收尾 | 总结本窗口有价值信息 → 合并进分层记忆文件 → 生成一份交接快照 → 归档已被吸收的旧快照 |
-| `/recall` | 新窗口开始 | 读记忆库 → 输出上次进度摘要与下一步建议 → 确认继续点后动工 |
+| `/recall` | 新窗口开始 | 按时间列出历史快照清单 → 你选择载入哪份 → 输出进度摘要与下一步建议 |
 
 触发方式为**指令触发**(非 hook 自动注入):记忆摘要必须总结精炼后保存,新窗口由用户显式调用来载入,可控且省 token。
 
@@ -21,9 +21,9 @@
 
 ```powershell
 # 在目标仓库根执行(默认安装到当前工作区仓库)
-pwsh projects/meow-memorycarry-zcode/scripts/install.ps1
+powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts/install.ps1
 # 或安装到其他仓库
-pwsh projects/meow-memorycarry-zcode/scripts/install.ps1 -Target <其他仓库根>
+powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts/install.ps1 -Target <其他仓库根>
 ```
 
 安装内容:
@@ -36,7 +36,7 @@ pwsh projects/meow-memorycarry-zcode/scripts/install.ps1 -Target <其他仓库�
 
 ## 记忆库
 
-位置 `<仓库根>/.zcode/memory/`,格式规范见 [docs/format-spec.md](docs/format-spec.md)。要点:
+位置 `<仓库根>/.zcode/memory/`,格式规范见 [docs/format-spec.md](docs/format-spec.md),使用教程见 [docs/user-guide.md](docs/user-guide.md)。要点:
 
 ```
 .zcode/memory/
@@ -45,7 +45,7 @@ pwsh projects/meow-memorycarry-zcode/scripts/install.ps1 -Target <其他仓库�
 ├── facts.md      # 原子事实:路径、命令、版本、环境
 ├── decisions.md  # 已拍板决策 + 理由(append-only)
 ├── lessons.md    # 踩坑与修复教训
-├── handoffs/     # 交接快照:YYYYMMDD-HHMM-<主题>.md,六节固定结构
+├── handoffs/     # 交接快照:<概括>.memo.md,六节固定结构
 └── archive/      # 已吸收且超 14 天的快照,git mv 归档,永不删除
 ```
 

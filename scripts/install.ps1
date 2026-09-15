@@ -1,7 +1,6 @@
 ﻿# meow-memorycarry 安装脚本:把 skills 与 commands 复制到指定仓库的 .zcode/ 下(幂等,可重复执行)
-# 用法:
-#   pwsh scripts/install.ps1                      # 安装到本工作区仓库
-#   pwsh scripts/install.ps1 -Target <其他仓库根>  # 安装到其他仓库
+# 用法(Windows PowerShell 5.1+):
+#   powershell -ExecutionPolicy Bypass -File scripts/install.ps1 [-Target <仓库根>]
 param(
     [string]$Target = (Resolve-Path "$PSScriptRoot\..\..\..").Path
 )
@@ -33,4 +32,4 @@ New-Item -ItemType Directory -Force -Path "$Dest\commands" | Out-Null
 Copy-Item "$Src\commands\handoff.md", "$Src\commands\recall.md" "$Dest\commands\" -Force
 Write-Host "installed commands: $(Join-Path $Dest 'commands')"
 
-Write-Host "`n完成。在 ZCode 会话中使用 /handoff 与 /recall。"
+Write-Host "`n完成。在 ZCode 会话中使用 /handoff 与 /recall;记忆库 .zcode/memory/ 将在首次 /handoff 时自动初始化。"
