@@ -12,7 +12,7 @@
 
 | 指令 | 时机 | 做什么 |
 |---|---|---|
-| `/handoff` | 会话收尾 | 总结本窗口有价值信息 → 合并进分层记忆文件 → 生成一份交接快照 → 归档已被吸收的旧快照 |
+| `/handoff` | 会话收尾 | 总结本窗口信息并生成交接快照;三档位:1 节约 / 2 平衡 / 3 深度,不带档位时由 AI 推荐 |
 | `/recall` | 新窗口开始 | 按时间列出历史快照清单 → 你选择载入哪份 → 输出进度摘要与下一步建议 |
 
 触发方式为**指令触发**(非 hook 自动注入):记忆摘要必须总结精炼后保存,新窗口由用户显式调用来载入,可控且省 token。
@@ -32,7 +32,7 @@ powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts
 - `.zcode/skills/meow-recall/` — 记忆载入技能
 - `.zcode/commands/handoff.md`、`recall.md` — `/handoff`、`/recall` 短名入口
 
-之后在 ZCode 会话里:`/handoff` 收尾、`/handoff tidy` 整理、`/recall` 续接;说"交接一下""接着上次"等口语也能触发。
+之后在 ZCode 会话里:`/handoff` 收尾(可带档位,如 `/handoff 3`)、`/handoff tidy` 整理、`/recall` 续接;说"交接一下""接着上次"等口语也能触发。
 
 ## 记忆库
 
