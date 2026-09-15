@@ -1,33 +1,30 @@
-﻿# meow-memorycarry 安装脚本:把 skills 与 commands 复制到指定仓库的 .zcode/ 下(幂等,可重复执行)
+﻿# meow-memorycarry 安装脚本:把技能与命令安装到目标仓库的 .zcode/ 下(幂等,可重复执行)
 # 用法(Windows PowerShell 5.1+):
-#   powershell -ExecutionPolicy Bypass -File scripts/install.ps1 [-Target <仓库根>]
+#   powershell -ExecutionPolicy Bypass -File scripts/install.ps1 [-Target <仓库根或用户目录>]
+# 默认安装到当前目录;目标目录没有 .zcode 时会自动创建。
+# 用户级安装(所有仓库全局可用):powershell -ExecutionPolicy Bypass -File scripts/install.ps1 -Target $env:USERPROFILE
 param(
-    [string]$Target = (Resolve-Path "$PSScriptRoot\..\..\..").Path
+    [string]$Target = (Get-Location).Path
 )
 
 $ErrorActionPreference = "Stop"
 $Src = Resolve-Path "$PSScriptRoot\.."
-$Dest = Join-Path $Target ".zcode"
 
-if (-not (Test-Path $Dest)) {
-    Write-Error "目标仓库不存在 .zcode 目录:$Dest"
+if (-not (Test-Path $Target)) {
+    Write-Error "目标路径不存在:$Target"
 }
 
-# meow-handoff 技能:SKILL.md + 规范文档 + 初始化模板,保证技能自包含
-$handoffDst = Join-Path $Dest "skills\meow-handoff"
-New-Item -ItemType Directory -Force -Path "$handoffDst\docs", "$handoffDst\templates" | Out-Null
-Copy-Item "$Src\skills\meow-handoff\SKILL.md" $handoffDst -Force
-Copy-Item "$Src\docs\format-spec.md" "$handoffDst\docs\" -Force
-Copy-Item "$Src\templates\*" "$handoffDst\templates\" -Force
-Write-Host "installed skill: $handoffDst"
+$Dest = Join-Path $Target ".zcode"
+New-Item -ItemType Directory -Force -Path $Dest | Out-Null
 
-# meow-recall 技能:仅 SKILL.md
-$recallDst = Join-Path $Dest "skills\meow-recall"
-New-Item -ItemType Directory -Force -Path $recallDst | Out-Null
-Copy-Item "$Src\skills\meow-recall\SKILL.md" $recallDst -Force
-Write-Host "installed skill: $recallDst"
+# 技能目录自包含(SKILL.md + docs/format-spec.md + templates/),整目录复制
+foreach ($name in @("meow-handoff", "meow-recall")) {
+    $dst = Join-Path $Dest "skills\$name"
+    New-Item -ItemType Directory -Force -Path $dst | Out-Null
+    Copy-Item "$Src\skills\$name\*" $dst -Recurse -Force
+    Write-Host "installed skill: $dst"
+}
 
-# 短名命令入口
 New-Item -ItemType Directory -Force -Path "$Dest\commands" | Out-Null
 Copy-Item "$Src\commands\handoff.md", "$Src\commands\recall.md" "$Dest\commands\" -Force
 Write-Host "installed commands: $(Join-Path $Dest 'commands')"

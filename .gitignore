@@ -8,6 +8,9 @@ dist/
 build/
 *.pyc
 
+# 打包产物(仅作为 Release 附件,不入库)
+packages/
+
 # 编辑器与系统文件
 .vscode/
 .idea/

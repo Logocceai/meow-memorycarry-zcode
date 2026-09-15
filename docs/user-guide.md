@@ -83,7 +83,7 @@ powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts
 
 ## 什么时候该交接
 
-- **上下文用量到 70-80%**:当前任务收尾后换窗口,这是最主要的时机(详见 `docs/notes/context-window-thresholds.md`)
+- **上下文用量到 70-80%**:当前任务收尾后换窗口,这是最主要的时机(接近上限时优先保证交接质量,不要继续硬撑)
 - **一个里程碑完成**:功能写完、bug 修完、方案敲定
 - **踩完坑之后**:刚解决的报错和它的根因,是快照里最值钱的内容
 - **当天收工前**:留一份"明天从哪继续"

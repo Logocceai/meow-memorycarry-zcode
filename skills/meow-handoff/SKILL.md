@@ -54,7 +54,7 @@ argument-hint: "[1|2|3|tidy]"
 
 7. **刷新 INDEX.md**(所有档位共用):活跃任务 ≤5 与下一步 ≤3 依据第 4 步提炼刷新;本次新快照加入"最近快照"列表(≤5 条,按 created 倒序);全文件 ≤80 行。
 
-8. **整理模式**(仅 `tidy`):去重并合并分层文件条目、执行行数上限、把所有 `absorbed` 超 14 天的快照 `git mv` 进 `archive/` 并改 `status: archived`、重建 INDEX.md,不新增任何记忆内容。
+8. **整理模式**(仅 `tidy`):去重分层文件条目(同一内容只保留最早一条,删除后续重复)、合并同类、执行行数上限、把所有 `absorbed` 超 14 天的快照 `git mv` 进 `archive/` 并改 `status: archived`、重建 INDEX.md(≤5 条,只列真实存在的快照),不新增任何记忆内容。
 
 9. **入库与报告**
    - 仓库由 git 跟踪时:`git add .zcode/memory/`(不自动 commit,提交由用户走 `/checkpoint`)。

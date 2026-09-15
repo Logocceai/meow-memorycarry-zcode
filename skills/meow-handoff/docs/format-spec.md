@@ -81,7 +81,7 @@ status: active
 1. 新快照写入时为 `active`。
 2. `/handoff` 写入新快照的同时,把旧 `active` 快照中仍然长期有效的信息(事实、决策、教训)合并进对应分层文件,然后把这些快照 frontmatter 的 `status` 改为 `absorbed`。
 3. `absorbed` 且 `created` 距今超过 14 天的快照,在下次 `/handoff` 时用 `git mv` 移入 `archive/` 并把 `status` 改为 `archived`。**只移动,不删除**——历史由 git 保留。
-4. `/handoff tidy`(整理模式)可随时手动触发:去重分层文件、合并同类条目、强制执行行数上限、批量归档过期快照、重建 INDEX.md。
+4. `/handoff tidy`(整理模式)可随时手动触发:去重分层文件(同一内容只保留最早一条)、合并同类条目、强制执行行数上限、批量归档过期快照、重建 INDEX.md(只列真实存在的快照)。
 
 分层文件永不移入 archive;过期内容直接改写或删除条目本身(条目级内容更新属于编辑,不属于删除文件)。
 
