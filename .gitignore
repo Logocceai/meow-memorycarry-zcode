@@ -1,0 +1,19 @@
+# 依赖目录
+node_modules/
+__pycache__/
+.venv/
+
+# 构建产物
+dist/
+build/
+*.pyc
+
+# 编辑器与系统文件
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# 环境变量
+.env
+.env.*
