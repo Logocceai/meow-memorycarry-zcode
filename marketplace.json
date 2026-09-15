@@ -5,7 +5,7 @@
   "plugins": [
     {
       "name": "meow-memorycarry",
-      "description": "Carry valuable session memory across AI coding windows: /handoff summarizes and stores a window's knowledge (level 1 save / 2 balanced / 3 deep), /recall lists past handoff snapshots by time for you to pick and reload. 跨会话记忆交接插件。",
+      "description": "Carry valuable session memory across AI coding windows: /handoff summarizes and stores a window's knowledge (speed axis s1/s2/s3, depth axis d1/d2/d3), /recall lists past handoff snapshots by time for you to pick and reload. 跨会话记忆交接插件。",
       "version": "0.1.0",
       "author": "Logocceai",
       "license": "MIT",

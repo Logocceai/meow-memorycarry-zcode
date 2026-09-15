@@ -26,6 +26,7 @@ const files = [
   "commands/recall.md",
   "skills/meow-handoff/SKILL.md",
   "skills/meow-handoff/docs/format-spec.md",
+  "skills/meow-handoff/docs/tier-system.md",
   "skills/meow-handoff/templates/INDEX.md",
   "skills/meow-handoff/templates/project.md",
   "skills/meow-handoff/templates/facts.md",

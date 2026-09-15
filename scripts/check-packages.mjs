@@ -55,8 +55,8 @@ const relSet = new Set(entries.map((e) => e.name.replace(`${wrapDir}/`, "")));
 const get = (rel) => entries.find((e) => e.name === `${wrapDir}/${rel}`)?.data.toString("utf8");
 
 // 1. 条目数与路径安全
-if (entries.length >= 19) pass(`条目数 ${entries.length}`);
-else fail(`条目数异常:${entries.length}(预期 ≥19)`);
+if (entries.length >= 20) pass(`条目数 ${entries.length}`);
+else fail(`条目数异常:${entries.length}(预期 ≥20)`);
 
 const unsafe = entries.filter(
   (e) => e.name.includes("\\") || e.name.includes("..") || /^[A-Za-z]:/.test(e.name) || e.name.startsWith("/")
@@ -82,6 +82,7 @@ const required = [
   "commands/recall.md",
   "skills/meow-handoff/SKILL.md",
   "skills/meow-handoff/docs/format-spec.md",
+  "skills/meow-handoff/docs/tier-system.md",
   "skills/meow-recall/SKILL.md",
   "skills/meow-handoff/templates/INDEX.md",
   "skills/meow-handoff/templates/project.md",

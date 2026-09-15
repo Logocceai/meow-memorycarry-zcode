@@ -36,7 +36,7 @@ powershell -ExecutionPolicy Bypass -File scripts/install.ps1 -Target $env:USERPR
 
 ## 安装后
 
-- 收尾:`/handoff`(AI 推荐档位)或 `/handoff 1|2|3` 指定档位;`/handoff tidy` 整理记忆库
+- 收尾:`/handoff`(全默认:速度 s2 + AI 按上下文推荐深度)或指定双轴,如 `/handoff s1`、`/handoff s1d3`;`/handoff tidy` 整理记忆库
 - 新窗口:`/recall`(列出快照清单供选择)、`/recall latest`(直接载入最新)
 - 口语触发同样有效:"交接一下""收尾""接着上次""上次做到哪了"
 - 首次 `/handoff` 自动创建记忆库 `.zcode/memory/`(从技能模板初始化)

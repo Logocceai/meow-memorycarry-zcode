@@ -7,7 +7,8 @@
 ### Added
 
 - **两条指令**(`/handoff`、`/recall`)。口语触发同样生效("交接一下""接着上次")。
-- **交接三档位**(`/handoff 1|2|3`)。1 节约(只写精简快照 + 索引)、2 平衡(更新相关分层文件 + 吸收旧快照)、3 深度(全量吸收合并去重);不带档位时按会话长度、任务状态与记忆库状况推荐档位供确认。
+- **双轴档位**。速度轴 `s1` 速度 / `s2` 平衡 / `s3` 质量(用户指定,默认 `s2`)决定压缩过程多快;深度轴 `d1` 节约 / `d2` 平衡 / `d3` 深度(默认 AI 按上下文量推荐)决定记多深。支持 `/handoff s1`、`/handoff s1d3`、`/handoff d2` 等写法。
+- **档位骨架文档**(`docs/tier-system.md`)。双轴定义、9 组合行为矩阵、调用语法与扩展规则,作为实现的唯一依据。
 - **记忆库分层结构**。`INDEX.md` 索引、`project.md` / `facts.md` / `decisions.md` / `lessons.md` 分层文件、`handoffs/` 快照(`<概括>.memo.md`)、`archive/` 归档;frontmatter 四字段(summary/created/updated/status)。
 - **防乱机制**。行数硬上限(索引 80 / 快照 150 / 分层文件 120)、`active → absorbed → archived` 生命周期、14 天自动归档、归档一律 `git mv` 永不删除、`/handoff tidy` 手动整理。
 - **技能自包含**。`skills/meow-handoff/` 内含格式规范与初始化模板,安装即复制,无组装步骤。

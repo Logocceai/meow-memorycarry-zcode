@@ -11,7 +11,7 @@
 
 | 指令 | 时机 | 做什么 |
 |---|---|---|
-| `/handoff` | 会话收尾 | 总结本窗口信息并生成交接快照;三档位:1 节约 / 2 平衡 / 3 深度,不带档位时由 AI 推荐 |
+| `/handoff` | 会话收尾 | 总结本窗口信息并生成交接快照;双轴档位:速度轴 `s1` 速度 / `s2` 平衡 / `s3` 质量(默认 `s2`),深度轴 `d1` 节约 / `d2` 平衡 / `d3` 深度(默认 AI 按上下文量推荐) |
 | `/recall` | 新窗口开始 | 按时间列出历史快照清单 → 你选择载入哪份 → 输出进度摘要与下一步建议 |
 
 触发方式为**指令触发**(非 hook 自动注入):记忆摘要必须总结精炼后保存,新窗口由用户显式调用来载入,可控且省 token。
@@ -29,8 +29,10 @@ AI 代理安装请读 [INSTALL-FOR-AI.md](INSTALL-FOR-AI.md)。安装后重启 Z
 ## 使用
 
 ```text
-会话收尾:  /handoff        # AI 推荐档位,确认后执行
-           /handoff 3      # 长任务换窗:深度交接,全量吸收合并
+会话收尾:  /handoff        # 全默认:速度 s2 + AI 按上下文推荐深度
+           /handoff s1     # 最快压缩(深度仍由 AI 决定)
+           /handoff s1d3   # 连写:最快压缩 + 全量吸收
+           /handoff d3     # 只定深度,速度默认 s2
            /handoff tidy   # 只整理记忆库,不新增
 新窗口:    /recall         # 列出快照清单,输入序号选择
            /recall latest  # 直接载入最新一份
@@ -58,7 +60,8 @@ AI 代理安装请读 [INSTALL-FOR-AI.md](INSTALL-FOR-AI.md)。安装后重启 Z
 ## 文档
 
 - [使用手册](docs/user-guide.md) — 安装、两条指令的交互细节、档位选择、FAQ、命令速查
-- [记忆格式规范](skills/meow-handoff/docs/format-spec.md) — frontmatter、命名、行数上限、生命周期、档位与吸收深度
+- [档位体系(骨架)](skills/meow-handoff/docs/tier-system.md) — 速度轴与深度轴的定义、9 组合行为矩阵、调用语法与扩展规则
+- [记忆格式规范](skills/meow-handoff/docs/format-spec.md) — frontmatter、命名、行数上限、生命周期、档位与格式的关系
 - [发布流程](docs/releasing.md) — 开发者:打包、核验、导出到独立仓库
 
 ## 项目结构
