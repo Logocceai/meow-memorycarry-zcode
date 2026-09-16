@@ -1,6 +1,6 @@
 # 档位体系(基础骨架)
 
-本文档定义 meow-memorycarry 交接的**双轴档位骨架**,是 `SKILL.md`、`format-spec.md` 等实现文件的唯一依据;实现与本文档冲突时,以本文档为准。
+本文档定义 meow-memorycarry-zcode 交接的**双轴档位骨架**,是 `SKILL.md`、`format-spec.md` 等实现文件的唯一依据;实现与本文档冲突时,以本文档为准。
 
 ## 1. 设计原则
 

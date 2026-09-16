@@ -1,6 +1,6 @@
 # 发布流程(Releasing)
 
-本文档说明 meow-memorycarry 如何从 monorepo 开发态导出为独立发布仓库。
+本文档说明 meow-memorycarry-zcode 如何从 monorepo 开发态导出为独立发布仓库。
 
 ## 核心原则
 
@@ -34,9 +34,9 @@ git commit -m "chore(release): X.Y.Z"
 ### 4. 导出独立分支(subtree split,只读)
 
 ```bash
-git branch -D release/meow-memorycarry 2>/dev/null   # 重复导出时先删旧分支
-git subtree split --prefix=projects/meow-memorycarry-zcode -b release/meow-memorycarry
-git ls-tree release/meow-memorycarry --name-only     # 校验:marketplace.json 等位于根
+git branch -D release/meow-memorycarry-zcode 2>/dev/null   # 重复导出时先删旧分支
+git subtree split --prefix=projects/meow-memorycarry-zcode -b release/meow-memorycarry-zcode
+git ls-tree release/meow-memorycarry-zcode --name-only     # 校验:marketplace.json 等位于根
 ```
 
 导出分支是独立历史(与 main 无共同祖先),提交数与项目历史一致;不含工作区其他内容。
@@ -44,9 +44,9 @@ git ls-tree release/meow-memorycarry --name-only     # 校验:marketplace.json �
 ### 5. 推送公开仓库(需远端已创建)
 
 ```bash
-git remote add meow https://github.com/Logocceai/meow-memorycarry.git   # 一次性
-git push meow release/meow-memorycarry:main
-EXPORT_HEAD=$(git rev-parse release/meow-memorycarry)
+git remote add meow https://github.com/Logocceai/meow-memorycarry-zcode.git   # 一次性
+git push meow release/meow-memorycarry-zcode:main
+EXPORT_HEAD=$(git rev-parse release/meow-memorycarry-zcode)
 git tag vX.Y.Z $EXPORT_HEAD && git push meow vX.Y.Z                      # tag 打在导出分支提交上
 ```
 
@@ -54,12 +54,12 @@ git tag vX.Y.Z $EXPORT_HEAD && git push meow vX.Y.Z                      # tag �
 
 ```powershell
 $env:HTTPS_PROXY = "http://127.0.0.1:7890"   # 本机 gh 需代理
-gh release create vX.Y.Z packages/meow-memorycarry-plugin-vX.Y.Z.zip --repo Logocceai/meow-memorycarry --title "vX.Y.Z" --notes "对照 CHANGELOG 摘要"
+gh release create vX.Y.Z packages/meow-memorycarry-zcode-plugin-vX.Y.Z.zip --repo Logocceai/meow-memorycarry-zcode --title "vX.Y.Z" --notes "对照 CHANGELOG 摘要"
 ```
 
-## 本地演练记录(2026-09-16)
+## 发布记录(2026-09-16)
 
-已演练并校验:`git subtree split` 生成的 `release/meow-memorycarry` 分支为 7 提交独立历史,根目录含 `marketplace.json`、`.zcode-plugin/plugin.json`、`skills/`、`commands/`、`docs/`、`scripts/`、`README.md`、`LICENSE`、`CHANGELOG.md`、`INSTALL-FOR-AI.md`。该分支仅本地,未推送;可随时 `git branch -D` 删除后按上述步骤重新导出。
+v0.1.0 已发布:公开仓库 <https://github.com/Logocceai/meow-memorycarry-zcode>。`git subtree split` 生成的本地导出分支 `release/meow-memorycarry-zcode` 为独立历史(与 main 无共同祖先),根目录含 `marketplace.json`、`.zcode-plugin/plugin.json`、`skills/`、`commands/`、`docs/`、`scripts/`、`README.md`、`LICENSE`、`CHANGELOG.md`、`INSTALL-FOR-AI.md`;Release 附件为 `meow-memorycarry-zcode-plugin-v0.1.0.zip`。分支可随时 `git branch -D` 删除后按上述步骤重新导出。
 
 ## 用户安装路径(发布后)
 

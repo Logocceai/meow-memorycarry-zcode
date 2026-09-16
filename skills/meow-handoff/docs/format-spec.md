@@ -1,4 +1,4 @@
-# meow-memorycarry 记忆格式规范
+# meow-memorycarry-zcode 记忆格式规范
 
 记忆库是每个仓库一份的分层 Markdown 目录,固定位置 `<仓库根>/.zcode/memory/`。所有写入(由 `/handoff`)与读取(由 `/recall`)都必须遵守本规范。
 

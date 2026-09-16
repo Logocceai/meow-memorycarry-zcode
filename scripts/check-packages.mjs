@@ -1,4 +1,4 @@
-// meow-memorycarry 发布包核验脚本(Node 零依赖)
+// meow-memorycarry-zcode 发布包核验脚本(Node 零依赖)
 // 用法:node scripts/check-packages.mjs [version]
 //   省略 version 时只做包内一致性检查;给出时额外比对工作区 .zcode-plugin/plugin.json 的版本
 // 校验:zip 可解、路径安全、必需条目齐全、版本三处一致、技能/命令命名与 frontmatter 合法、模板字段齐全
@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pluginJson = JSON.parse(readFileSync(path.join(root, ".zcode-plugin/plugin.json"), "utf8"));
 const version = pluginJson.version;
-const wrapDir = `meow-memorycarry-plugin-v${version}`;
+const wrapDir = `meow-memorycarry-zcode-plugin-v${version}`;
 const zipPath = path.join(root, "packages", `${wrapDir}.zip`);
 
 const results = [];

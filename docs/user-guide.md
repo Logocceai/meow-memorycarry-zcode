@@ -1,4 +1,4 @@
-# meow-memorycarry 使用手册
+# meow-memorycarry-zcode 使用手册
 
 让 AI 会话的记忆可以**带走**和**带回**:收尾时用 `/handoff` 把本窗口有价值的信息总结入库,新窗口用 `/recall` 按时间浏览历史记忆、选择载入,接着上一个任务继续干。
 

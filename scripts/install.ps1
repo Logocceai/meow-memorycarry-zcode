@@ -1,4 +1,4 @@
-﻿# meow-memorycarry 安装脚本:把技能与命令安装到目标仓库的 .zcode/ 下(幂等,可重复执行)
+﻿# meow-memorycarry-zcode 安装脚本:把技能与命令安装到目标仓库的 .zcode/ 下(幂等,可重复执行)
 # 用法(Windows PowerShell 5.1+):
 #   powershell -ExecutionPolicy Bypass -File scripts/install.ps1 [-Target <仓库根或用户目录>]
 # 默认安装到当前目录;目标目录没有 .zcode 时会自动创建。

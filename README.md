@@ -1,4 +1,4 @@
-# meow-memorycarry
+# meow-memorycarry-zcode
 
 让 AI 编码代理把一个窗口(会话)有价值的信息**总结后规范化带走**,新窗口用指令载入记忆,更好地继续下一个任务。ZCode 插件,纯 Markdown 技能,零运行时依赖。
 
@@ -20,7 +20,7 @@
 
 | 方式 | 做法 | 适合 |
 |---|---|---|
-| 插件市场(推荐) | ZCode → Settings → Plugin Management → Discover → `+` 添加市场 → 粘贴 `https://github.com/Logocceai/meow-memorycarry` → Get | 所有人 |
+| 插件市场(推荐) | ZCode → Settings → Plugin Management → Discover → `+` 添加市场 → 粘贴 `https://github.com/Logocceai/meow-memorycarry-zcode` → Get | 所有人 |
 | 离线 zip | 解压发布包,添加解压文件夹为市场 | 无网络 |
 | 安装脚本 | `powershell -ExecutionPolicy Bypass -File scripts/install.ps1 [-Target <仓库根>]` | 有 shell 的仓库级/用户级安装 |
 

@@ -1,6 +1,6 @@
-// meow-memorycarry 打包脚本(Node 零依赖:内置 zlib + 手写 zip 容器)
+// meow-memorycarry-zcode 打包脚本(Node 零依赖:内置 zlib + 手写 zip 容器)
 // 用法:node scripts/package.mjs
-// 产物:packages/meow-memorycarry-plugin-v<version>.zip(单层包装目录,路径全用正斜杠)
+// 产物:packages/meow-memorycarry-zcode-plugin-v<version>.zip(单层包装目录,路径全用正斜杠)
 import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "node:fs";
 import { deflateRawSync, crc32 } from "node:zlib";
 import path from "node:path";
@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(path.join(root, ".zcode-plugin/plugin.json"), "utf8"));
 const version = pkg.version;
-const wrapDir = `meow-memorycarry-plugin-v${version}`;
+const wrapDir = `meow-memorycarry-zcode-plugin-v${version}`;
 const zipName = `${wrapDir}.zip`;
 
 // 发布文件清单(相对插件根,路径一律正斜杠);skills/ 下的技能文件逐个列出以便缺件即报错
