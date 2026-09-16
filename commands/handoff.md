@@ -1,6 +1,6 @@
 ---
 description: 会话收尾把本窗口有价值信息总结后写入记忆库,生成交接快照;双轴档位——速度轴 s1 速度 / s2 平衡 / s3 质量(默认 s2),深度轴 d1 节约 / d2 平衡 / d3 深度(默认 AI 推荐)
-argument-hint: "[sN [dN] | tidy]"
+argument-hint: "[sN [dN] | dM | N | tidy]"
 skills: [meow-handoff]
 ---
 

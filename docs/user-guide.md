@@ -64,7 +64,7 @@ powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts
 
 `d1` 写出的快照仍然是一份完整的记忆文件,只是信息没被合并进分层文件;下次任何更深档位的交接会自动把它吸收掉,不会丢。
 
-输入 `/handoff tidy` 则进入**整理模式**:只整理不新增,去重、压缩、把过期快照归档,适合记忆库用久了之后手动清理一次。
+输入 `/handoff tidy` 则进入**整理模式**:只整理不新增,去重、压缩、把过期快照归档(含长期未吸收的 `active` 快照,会逐条问你),适合记忆库用久了之后手动清理一次。
 
 ### `/recall` — 新窗口载入
 
@@ -80,6 +80,7 @@ powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts
 - 输入序号载入,如 `1`;也可以多选,如 `1,3`
 - 直接回车 = 载入最新一份
 - 已经确定要最新时,直接输入 `/recall latest` 跳过选择
+- 客户端弹出选项式选择框时,每个选项对应一份快照;选完同样先给你摘要,确认后才动手
 
 载入后你会看到一段摘要:上次进度、相关决策与教训、下一步建议,末尾问你"从哪里继续"。确认后 AI 开始干活。
 
@@ -146,7 +147,7 @@ powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts
 未交接的增量(决策、坑、断点)不会进记忆库。补救:如果旧窗口会话还在,回去补一次 `/handoff`;如果已经关闭,代码进度有 git 兜底,软知识只能从会话历史里找回。这也是为什么建议养成"收尾先交接"的习惯。
 
 **记忆库会不会越来越乱、越来越大?**
-有防乱机制:写入前有行数硬上限,超限必须先精简;旧快照内容被合并进分层文件后标记 `absorbed`;超过 14 天自动 `git mv` 进 `archive/` 归档(只移动不删除,历史由 git 保留)。用久了觉得乱,执行 `/handoff tidy` 手动整理一次。
+有防乱机制:写入前有行数硬上限,超限必须先精简;旧快照内容被合并进分层文件后标记 `absorbed`;已吸收且创建满 14 天的快照自动 `git mv` 进 `archive/` 归档(只移动不删除,历史由 git 保留)。用久了觉得乱,执行 `/handoff tidy` 手动整理一次。
 
 **清单里的 `active` / `absorbed` 是什么意思?**
 `active` = 这份快照的信息还没被完全吸收,值得优先载入;`absorbed` = 主要内容已合并进分层文件(project/decisions 等),快照本身只作存档,载入它时信息基本也能从分层文件拿到。
