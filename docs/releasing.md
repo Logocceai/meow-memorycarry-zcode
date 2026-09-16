@@ -59,6 +59,8 @@ gh release create vX.Y.Z packages/meow-memorycarry-zcode-plugin-vX.Y.Z.zip --rep
 
 ## 发布记录(2026-09-16)
 
+v0.1.3 已发布:会话标题不再被客户端落盘冲回旧值(`meta_json.title` 一起改写),并经 CDP 调用客户端 `renameTask` 让侧边栏当场刷新(不可得则自动跳过,退回"下次重启可见")。
+
 v0.1.0 已发布:公开仓库 <https://github.com/Logocceai/meow-memorycarry-zcode>。`git subtree split` 生成的本地导出分支 `release/meow-memorycarry-zcode` 为独立历史(与 main 无共同祖先),根目录含 `marketplace.json`、`.zcode-plugin/plugin.json`、`skills/`、`commands/`、`docs/`、`scripts/`、`README.md`、`LICENSE`、`CHANGELOG.md`、`INSTALL-FOR-AI.md`;Release 附件为 `meow-memorycarry-zcode-plugin-v0.1.0.zip`。分支可随时 `git branch -D` 删除后按上述步骤重新导出。
 
 ## 用户安装路径(发布后)

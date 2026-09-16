@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.3
+
+会话标题改写的两个修正:标题不再被客户端冲回旧值,且改完**当场生效**(不必重启客户端)。
+
+### Added
+
+- **侧边栏免刷新**:改完数据库后,脚本再经 CDP 调用客户端自己的 `zcodeTaskService.renameTask`——它会广播 `task_title_changed`,侧边栏当场更新,不用再重启客户端或切换工作区。该服务只存在于渲染层的 React context(`window.zcode` 未暴露、也没有对应 IPC 频道),脚本从侧边栏任务条目的 React fiber 向上取到它;任一环不可得(客户端未带 `--remote-debugging-port`、版本内部结构变化)就自动跳过,数据库改写仍是保底路径,行为退回"下次重启可见"。`--no-live` 可显式跳过这一步。
+
+### Fixed
+
+- **标题被客户端落盘冲回旧值**:脚本原先只改 `tasks.title` 列,而客户端在对话轮次结束时以该行 `meta_json` 为源重建任务行,会把标题改回 `/recall`(实测写入 11 秒后被改回),表现为"写库成功、重启后仍是旧标题"。现在 `meta_json.title` 与列一起改写,早退条件也放宽为"两个库都正确",被冲回的标题重跑一次命令即可修复(`skills/meow-recall/scripts/set-session-title.mjs`)。
+
 ## v0.1.2
 
 `/recall` 载入记忆后自动改写会话标题,左栏不再显示 `/recall`;README 补齐英文版。
