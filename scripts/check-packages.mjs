@@ -77,6 +77,7 @@ const required = [
   "README.md",
   "INSTALL-FOR-AI.md",
   "docs/user-guide.md",
+  "docs/token-report.md",
   "scripts/install.ps1",
   "commands/handoff.md",
   "commands/recall.md",

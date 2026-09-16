@@ -22,6 +22,7 @@ const files = [
   "INSTALL-FOR-AI.md",
   "scripts/install.ps1",
   "docs/user-guide.md",
+  "docs/token-report.md",
   "commands/handoff.md",
   "commands/recall.md",
   "skills/meow-handoff/SKILL.md",
