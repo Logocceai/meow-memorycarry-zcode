@@ -1,6 +1,6 @@
 {
   "name": "meow-memorycarry-zcode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Carry valuable session memory across AI coding windows: summarize a window into a layered Markdown memory store, browse and reload it in a new window. 跨会话记忆交接:收尾总结入库,新窗口按时间浏览并载入继续。",
   "author": {
     "name": "Logocceai"

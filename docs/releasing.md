@@ -23,7 +23,7 @@ node scripts/package.mjs                                            # 生成 zip
 node scripts/check-packages.mjs X.Y.Z                               # 结构/版本/命名全量核验
 ```
 
-安装产物(`.zcode/` 下)与源码须保持一致;打包核验必须全绿。
+安装产物(`.zcode/` 下)与源码须保持一致;打包核验必须全绿;`README.md`(中文)与 `README.en.md`(英文)两份齐全、顶部带语言切换行(规范见工作区 `AGENTS.md`「项目文档规范」)。
 
 ### 3. 提交
 

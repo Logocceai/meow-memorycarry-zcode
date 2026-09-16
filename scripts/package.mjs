@@ -19,6 +19,7 @@ const files = [
   "LICENSE",
   "CHANGELOG.md",
   "README.md",
+  "README.en.md",
   "INSTALL-FOR-AI.md",
   "scripts/install.ps1",
   "docs/user-guide.md",
@@ -35,6 +36,7 @@ const files = [
   "skills/meow-handoff/templates/lessons.md",
   "skills/meow-handoff/templates/handoff-snapshot.md",
   "skills/meow-recall/SKILL.md",
+  "skills/meow-recall/scripts/set-session-title.mjs",
 ];
 
 const missing = files.filter((f) => !existsSync(path.join(root, f)));

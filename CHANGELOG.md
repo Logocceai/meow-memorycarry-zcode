@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.2
+
+`/recall` 载入记忆后自动改写会话标题,左栏不再显示 `/recall`;README 补齐英文版。
+
+### Added
+
+- **`/recall` 载入后自动改写会话标题**(`skills/meow-recall/scripts/set-session-title.mjs`)。`/recall` 只有 7 个字符,触发不了 ZCode 的标题生成(最小 10 字符守卫),左栏会永久停在 `/recall`;现在载入完成后用所选快照的概括改写标题——做法与 ZCode 官方 `restore-legacy-sessions` 插件一致(写 `title_source='custom'` 与 `title_overridden=1`,不会被客户端回滚)。侧边栏在下次打开客户端或切换工作区后显示新标题。
+- **英文 README**(`README.en.md`),与中文版 1:1 对照;中文 `README.md` 顶部加语言切换行。
+
+### Changed
+
+- 发布回归校验新增"README 中英两份齐全且互链";打包清单与核验清单纳入 `README.en.md` 与会话标题脚本。
+
 ## v0.1.1
 
 规则修正版本。对 v0.1.0 发布后实际使用中暴露的问题做了一次全面修复(20 项),并补上 Markdown 版实测报告。

@@ -1,5 +1,7 @@
 # meow-memorycarry-zcode
 
+[中文](README.md) | [English](README.en.md)
+
 让 AI 编码代理把一个窗口(会话)有价值的信息**总结后规范化带走**,新窗口用指令载入记忆,更好地继续下一个任务。ZCode 插件,纯 Markdown 技能,零运行时依赖。
 
 - 设计借鉴:[dsh-meow-memory](https://github.com/Phant0Meow/dsh-meow-memory) 的分层记忆与 dream 整理思想
