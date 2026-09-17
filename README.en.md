@@ -5,6 +5,7 @@
 Let an AI coding agent **summarize and carry away** what a session learned, and reload it in a new window to continue the next task. A ZCode plugin: pure Markdown skills, zero runtime dependencies.
 
 - Inspired by: [dsh-meow-memory](https://github.com/Phant0Meow/dsh-meow-memory)'s layered memory and dream-consolidation ideas
+- 📺 Video tutorial: [ZCode local memory store and recall plugin](https://www.bilibili.com/video/BV182eF66EB9/) — install, usage and long-context benchmarks *(Chinese)*
 - License: MIT
 
 ## The problem it solves
@@ -85,7 +86,7 @@ New window:     /recall         # list snapshots, pick by number
                 /recall latest  # load the newest one directly
 ```
 
-Typical loop: `/checkpoint` (commit code) → `/handoff` (carry the memory away) → close the window → new window `/recall` (pick it back up).
+Typical loop: `/handoff` (auto-commits code + carries the memory away) → close the window → new window `/recall` (pick it back up).
 
 ## Handoff timing and cautions
 
@@ -95,7 +96,7 @@ Typical loop: `/checkpoint` (commit code) → `/handoff` (carry the memory away)
 
 **Cautions**:
 
-- **`/checkpoint` first, then `/handoff`** — code progress belongs to git, soft knowledge to the memory store; reverse the order and you get "memory says it is done but the code was never committed".
+- **Code commit is built in** — `/handoff` auto-commits uncommitted changes (grouped by area, English commit messages) and pushes; no separate `/checkpoint` needed. It only skips the commit and warns you when it spots secrets (`.env`, keys) or oversized files.
 - **Leave context headroom for the handoff** — the handoff itself reads the memory store, scans plans and writes a snapshot; start too close to the limit and it may hit automatic compaction halfway through.
 - **For a mid-task handoff, `Next` must be actionable** — say which file to touch, what to do, and what is still unverified; "continue the task" wastes the handoff.
 - **Read the report before closing the window** — it lists the tiers used and which files were created, updated or archived; a quick scan catches a wrong tier or a piece of information that never made it in.

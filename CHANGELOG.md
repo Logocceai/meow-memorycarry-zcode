@@ -2,13 +2,15 @@
 
 ## v0.1.4
 
-新增面向使用者的交接笔记(中英双语,时机为主线、注意事项为重点),README 增加对应章节,AI 一键安装完成后会主动引导用户阅读。
+新增面向使用者的交接笔记(中英双语,时机为主线、注意事项为重点),README 增加对应章节,AI 一键安装完成后会主动引导用户阅读;**交接内置自动提交**——`/handoff` 顺带完成代码提交与推送,不再需要单独跑 `/checkpoint`。
 
 ### Added
 
-- **交接笔记 `docs/handoff-notes.md`(中文)与 `docs/handoff-notes.en.md`(英文)**。讲清"人为交接"这件事:为什么交接要由人主动触发(自动压缩也在替你"总结",但它不认识你的任务)、四类时机与两类不必交接的场合、以及交接前 / 中 / 后各自的注意事项(先 `/checkpoint` 再 `/handoff`、留上下文余量、中途交接的 `Next` 要可执行、交接后读报告确认落点)。
+- **交接内置自动提交**(`skills/meow-handoff/SKILL.md` 第 3、9 步)。执行 `/handoff` 时检测到未提交改动会**自动提交并推送**,一条命令完成原先 `/checkpoint` + `/handoff` 两步:按领域分组(最多 3 个)、英文 Conventional Commits。唯一的刹车是安全检查——出现 `.env`、`*.key`、`*.pem`、`credentials*`、单文件 >10MB,或 `node_modules/` 等误入产物被跟踪时,跳过提交并在报告里列出文件与原因,交用户手动处理;推送失败不阻塞流程,提交仍安全留在本地。记忆库改动在同一次交接结束时按同样规则提交(`chore(memory): <快照概括>`)。
+- **交接笔记 `docs/handoff-notes.md`(中文)与 `docs/handoff-notes.en.md`(英文)**。讲清"人为交接"这件事:为什么交接要由人主动触发(自动压缩也在替你"总结",但它不认识你的任务)、四类时机与两类不必交接的场合、以及交接前 / 中 / 后各自的注意事项(提交已内置、留上下文余量、中途交接的 `Next` 要可执行、交接后读报告确认落点)。
 - **README 新增「交接的时机与注意事项」一节**(中英双语),概括时机并列出四条注意事项。
 - **安装引导**:AI 按 `INSTALL-FOR-AI.md` 完成安装后,须主动向用户说明交接三要点并指向交接笔记;README「方式 1」的安装提示词同步补上这一句。
+- **视频教程链接**(README 中英顶部):Bilibili 上的安装、使用与长上下文实测演示。
 
 ### Fixed
 
@@ -18,6 +20,7 @@
 
 - 打包清单与核验清单纳入 `docs/handoff-notes.md` 与 `docs/handoff-notes.en.md`(23 → 25 项)。
 - `docs/user-guide.md` 的「什么时候该交接」一节改为指向交接笔记,两处不再各讲一套。
+- 全部写着"先 `/checkpoint` 再 `/handoff`"的文档同步改为"提交已内置":README 中英、`docs/user-guide.md`(它会做什么 / 典型工作流 / FAQ)、`docs/handoff-notes.md` 与英文版、`INSTALL-FOR-AI.md`、`skills/meow-handoff/docs/tier-system.md`(速度轴表与流程归属表)。
 
 ## v0.1.3
 

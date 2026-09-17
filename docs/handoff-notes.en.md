@@ -38,7 +38,8 @@ Beyond the percentage, **behavioural signals show up earlier**: re-reading the s
 
 ### Before the handoff
 
-- **`/checkpoint` first, then `/handoff`.** Code progress belongs to git, soft knowledge belongs to the memory store. Reverse the order and you get a mismatch where "memory says it is done but the code was never committed". `/handoff` warns you when it detects uncommitted changes.
+- **Code commit is built in — no separate `/checkpoint` needed.** `/handoff` auto-commits uncommitted changes (grouped by area, English Conventional Commits) and pushes. The only exception: when it spots secrets (`.env`, keys) or oversized files it skips the commit and flags them in the report for you to handle.
+- **A failed push is not a failed handoff.** The commit still lands locally and the report says so; run `git push` yourself later.
 - **Leave enough context headroom.** See the first section: the handoff itself consumes context, and doing it when the window is nearly full is where things go wrong.
 
 ### During the handoff
@@ -55,7 +56,7 @@ Beyond the percentage, **behavioural signals show up earlier**: re-reading the s
 
 In a new window, type `/recall`. It first lists past snapshots for you to choose from (rather than pushing the newest one at you), then prints a progress summary and next steps; you confirm and carry on.
 
-The typical loop: `/checkpoint` → `/handoff` → close the window → `/recall` in a new one.
+The typical loop: `/handoff` (auto-commit + carry the memory away) → close the window → `/recall` in a new one.
 
 ## Related docs
 
