@@ -38,6 +38,7 @@ description: 新窗口开始时从记忆库(.zcode/memory/)按时间列出历史
    - **上次进度**:所选快照的 Summary 与 Done 要点
    - **相关决策与教训**:只列与本次任务直接相关的条目
    - **下一步建议**:快照 Next 与 INDEX"下一步"的合并
+   - **相关知识(可选)**:仓库存在 `.zcode/knowledge/` 时,用快照 Next 的关键词跑一次 `node .zcode/skills/meow-knowledge/scripts/kb.mjs search "<关键词>"`,把至多 5 条命中(路径 + 标题 + summary)附在摘要末尾,标注"需要时用 `/kb show <路径>` 读正文";**不读正文**,无命中则略过。本段计入 30 行限额。
 
    摘要末尾向用户确认"从哪里继续",得到答复再动工。
 
@@ -58,6 +59,7 @@ description: 新窗口开始时从记忆库(.zcode/memory/)按时间列出历史
 ## 边界
 
 - 第 2-3 步只读 frontmatter 与 INDEX,不修改记忆文件(写入是 `/handoff` 的职责)。
+- 第 5 步的知识检索是只读调用(运行 `kb.mjs search`),不改动知识库;知识库不存在时跳过。
 - 第 6 步只写 ZCode 的标题字段(`session.title` + `title_source='custom'`、`tasks.title` + `meta_json.title` + `title_overridden=1`),并通过客户端自己的 `renameTask` 触发一次侧边栏刷新;不动会话内容。被标记为人工标题后该会话不再自动生成标题——对 `/recall` 会话本来也不会生成,无损失。
 - 不凭空编造:清单为空、快照缺某类信息时明确说明,禁止补写臆测内容。
 - 载入摘要超过 30 行说明选得太多:优先压缩为每份一行要点并提示用户下次少选几份;**不丢弃用户已确认的选择**、不回退重来。
