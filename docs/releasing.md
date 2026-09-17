@@ -57,6 +57,10 @@ $env:HTTPS_PROXY = "http://127.0.0.1:7890"   # 本机 gh 需代理
 gh release create vX.Y.Z packages/meow-memorycarry-zcode-plugin-vX.Y.Z.zip --repo Logocceai/meow-memorycarry-zcode --title "vX.Y.Z" --notes "对照 CHANGELOG 摘要"
 ```
 
+## 发布记录(2026-09-17)
+
+v0.1.4 已发布:交接笔记中英双语(`docs/handoff-notes.md` / `docs/handoff-notes.en.md`),README 新增「交接的时机与注意事项」一节,AI 按 `INSTALL-FOR-AI.md` 完成安装后主动引导用户阅读交接注意事项;打包与核验清单纳入两个新文档(23 → 25 项);`INSTALL-FOR-AI.md` 离线示例版本号纠正(此前停留在 v0.1.0)。
+
 ## 发布记录(2026-09-16)
 
 v0.1.3 已发布:会话标题不再被客户端落盘冲回旧值(`meta_json.title` 一起改写),并经 CDP 调用客户端 `renameTask` 让侧边栏当场刷新(不可得则自动跳过,退回"下次重启可见")。
