@@ -40,6 +40,7 @@
 ```text
 把这个插件装到当前仓库:https://github.com/Logocceai/meow-memorycarry-zcode
 按仓库里的 INSTALL-FOR-AI.md 执行。
+装完后引导我读一下交接的注意事项。
 ```
 
 AI 会运行仓库根的 `scripts/install.ps1`,把技能与命令装进 `<仓库根>/.zcode/`;装完开个新窗口,`/handoff`、`/recall` 即可用(说"交接一下""接着上次"等口语也能触发)。
@@ -86,6 +87,21 @@ AI 代理安装请读 [INSTALL-FOR-AI.md](INSTALL-FOR-AI.md)。
 
 典型轮回:`/checkpoint`(提交代码)→ `/handoff`(带走记忆)→ 关窗口 → 新窗口 `/recall`(载入继续)。
 
+## 交接的时机与注意事项
+
+**什么时候交接**:上下文到 70–80%(首要信号)、里程碑完成、踩完坑之后、当天收工前。行为信号比百分比出现得更早——重复读同一个文件、忘了之前定好的规则、回答开始变含糊,出现任一条就该交接。
+
+**什么时候不用交接**:任务还剩一两轮就结束(交接的读读写写收不回成本)、零碎问答没有决策与断点(交接出来只是流水账)。
+
+**注意事项**:
+
+- **先 `/checkpoint`,再 `/handoff`** —— 代码进度归 git,软知识归记忆库;顺序反了会出现"记忆里写着做完了、代码却没提交"的脱节。
+- **给交接留上下文余量** —— 交接本身要读记忆库、扫计划、写快照,同样吃上下文;等快满了才交,可能做到一半就撞上自动压缩。
+- **中途交接时 `Next` 要可执行** —— 写到"动哪个文件、做什么、什么还没验证"的粒度;"继续完成任务"这种写法等于白交接。
+- **交接后看一眼报告** —— 它列出本次档位与新建/更新/归档的文件,扫一眼能发现档位选错或信息遗漏。
+
+完整说明见 → [交接笔记:时机与注意事项](docs/handoff-notes.md)(中英双语)
+
 ## 记忆库
 
 位置 `<仓库根>/.zcode/memory/`,随仓库提交 git,跨机器同步、历史可回滚:
@@ -106,6 +122,7 @@ AI 代理安装请读 [INSTALL-FOR-AI.md](INSTALL-FOR-AI.md)。
 ## 文档
 
 - [使用手册](docs/user-guide.md) — 安装、两条指令的交互细节、档位选择、FAQ、命令速查
+- [交接笔记](docs/handoff-notes.md) — 什么时候该交接、交接前中后各要注意什么(中英双语)
 - [Token 节省与档位成本实测](docs/token-report.md) — 10 个隔离实验的数据、方法与口径
 - [档位体系(骨架)](skills/meow-handoff/docs/tier-system.md) — 速度轴与深度轴的定义、9 组合行为矩阵、调用语法与扩展规则
 - [记忆格式规范](skills/meow-handoff/docs/format-spec.md) — frontmatter、命名、行数上限、生命周期、档位与格式的关系
@@ -123,6 +140,7 @@ scripts/install.ps1         # 安装脚本
 scripts/package.mjs         # 打包脚本(生成发布 zip)
 scripts/check-packages.mjs  # 发布包核验脚本
 docs/user-guide.md          # 用户手册
+docs/handoff-notes.md       # 交接笔记:时机与注意事项(中英双语)
 docs/token-report.md        # Token 节省与档位成本实测报告
 docs/releasing.md           # 发布流程
 ```

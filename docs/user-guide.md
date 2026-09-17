@@ -108,6 +108,8 @@ powershell -ExecutionPolicy Bypass -File projects/meow-memorycarry-zcode/scripts
 
 不需要高频交接——那是流水账。一次有信息量的交接胜过十次敷衍的。
 
+更完整的时机判断与注意事项(交接前 / 交接中 / 交接后各要注意什么)见 [交接笔记:时机与注意事项](handoff-notes.md)。
+
 ## 记忆库长什么样
 
 每安装到一个仓库,记忆库固定放在 `<仓库根>/.zcode/memory/`,随仓库一起提交 git,换机器、回滚历史都靠它:

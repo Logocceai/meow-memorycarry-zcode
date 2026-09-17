@@ -30,7 +30,7 @@ powershell -ExecutionPolicy Bypass -File scripts/install.ps1 -Target $env:USERPR
 1. 打开 ZCode → **Settings(设置)→ Plugin Management(插件管理)→ Discover**
 2. 点 **+** 添加市场:
    - 在线:粘贴仓库地址 `https://github.com/Logocceai/meow-memorycarry-zcode`
-   - 离线:先解压 `meow-memorycarry-zcode-plugin-v0.1.0.zip`,再添加解压出的文件夹(其根目录含 `marketplace.json`)
+   - 离线:先解压 `meow-memorycarry-zcode-plugin-v0.1.4.zip`,再添加解压出的文件夹(其根目录含 `marketplace.json`)
 3. 在列表中找到 **meow-memorycarry-zcode**,点 **Get** 安装
 4. 重启 ZCode
 
@@ -39,6 +39,14 @@ powershell -ExecutionPolicy Bypass -File scripts/install.ps1 -Target $env:USERPR
 注意:技能装在哪里只决定"能否用",**记忆库永远写在当前工作仓库的 `.zcode/memory/`**,随该仓库一起提交 git,跨机器同步靠它。
 
 ## 安装后
+
+**第一步:主动向用户说明交接的注意事项(不要跳过)。** 安装完成后,把下面三条讲给用户听,并指向仓库里的 [`docs/handoff-notes.md`](docs/handoff-notes.md)(中英双语);如果当前拿不到该文档(只有 zip、或经市场安装),就口头概括这三条:
+
+1. **交接由人主动触发** —— 时机是上下文 70–80%、里程碑完成、踩完坑之后、当天收工前;行为信号(重复读同一个文件、忘了之前定好的规则、回答开始变含糊)比百分比出现得更早。
+2. **先 `/checkpoint` 再 `/handoff`,别等上下文快满** —— 代码进度归 git,软知识归记忆库;交接本身也吃上下文,快满时才做容易撞上自动压缩。
+3. **中途交接要把"下一步做什么"写清楚** —— 写到动哪个文件、做什么、什么还没验证的粒度;含糊写"继续完成任务"等于白交接。
+
+**第二步:告诉用户怎么开始。**
 
 - 收尾:`/handoff`(全默认:速度 s2 + AI 按上下文推荐深度)或指定双轴,如 `/handoff s1`、`/handoff s1d3`;`/handoff tidy` 整理记忆库
 - 新窗口:`/recall`(列出快照清单供选择)、`/recall latest`(直接载入最新)

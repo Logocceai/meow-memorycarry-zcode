@@ -40,6 +40,7 @@ Send this line to the AI in ZCode:
 ```text
 Install this plugin into the current repo: https://github.com/Logocceai/meow-memorycarry-zcode
 Follow INSTALL-FOR-AI.md in that repo.
+After installing, walk me through the handoff cautions.
 ```
 
 The AI runs `scripts/install.ps1` from the repo root, copying the skills and commands into `<repo>/.zcode/`. Open a new window and `/handoff` and `/recall` are ready (colloquial triggers like "wrap this up" work too).
@@ -86,6 +87,21 @@ New window:     /recall         # list snapshots, pick by number
 
 Typical loop: `/checkpoint` (commit code) → `/handoff` (carry the memory away) → close the window → new window `/recall` (pick it back up).
 
+## Handoff timing and cautions
+
+**When to hand off**: context at 70–80% (the primary signal), a milestone completed, right after getting through a pitfall, or at the end of the day. Behavioural signals show up earlier than the percentage — re-reading the same file, forgetting a convention agreed earlier, answers turning vague; any one of them means it is time.
+
+**When not to**: one or two turns left in the task (the read-write cost of a handoff cannot be recovered), or small talk with no decisions and no stopping point (a snapshot would be pure log-keeping).
+
+**Cautions**:
+
+- **`/checkpoint` first, then `/handoff`** — code progress belongs to git, soft knowledge to the memory store; reverse the order and you get "memory says it is done but the code was never committed".
+- **Leave context headroom for the handoff** — the handoff itself reads the memory store, scans plans and writes a snapshot; start too close to the limit and it may hit automatic compaction halfway through.
+- **For a mid-task handoff, `Next` must be actionable** — say which file to touch, what to do, and what is still unverified; "continue the task" wastes the handoff.
+- **Read the report before closing the window** — it lists the tiers used and which files were created, updated or archived; a quick scan catches a wrong tier or a piece of information that never made it in.
+
+Full notes → [Handoff notes: timing and cautions](docs/handoff-notes.md) (Chinese + English)
+
 ## Memory store
 
 Lives at `<repo>/.zcode/memory/`, committed with the repo, so it syncs across machines and can be rolled back:
@@ -106,6 +122,7 @@ Guardrails: one fact per line with a date, hard line limits, an `active → abso
 ## Docs
 
 - [User guide](docs/user-guide.md) — install, interaction details of both commands, tier choices, FAQ, command cheat sheet *(Chinese)*
+- [Handoff notes](docs/handoff-notes.md) — when to hand off, and what to watch out for before, during and after (Chinese + English)
 - [Token savings and tier cost report](docs/token-report.md) — data, method and caveats from ten isolated experiments *(Chinese)*
 - [Tier system](skills/meow-handoff/docs/tier-system.md) — speed and depth axis definitions, the 9-combination matrix, syntax and extension rules *(Chinese)*
 - [Memory format spec](skills/meow-handoff/docs/format-spec.md) — frontmatter, naming, line limits, lifecycle, how tiers relate to format *(Chinese)*
@@ -123,6 +140,7 @@ scripts/install.ps1         # installer
 scripts/package.mjs         # packaging script (builds the release zip)
 scripts/check-packages.mjs  # release package verifier
 docs/user-guide.md          # user guide
+docs/handoff-notes.md       # handoff notes: timing and cautions (Chinese + English)
 docs/token-report.md        # token savings and tier cost report
 docs/releasing.md           # release process
 ```
