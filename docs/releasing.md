@@ -57,6 +57,10 @@ $env:HTTPS_PROXY = "http://127.0.0.1:7890"   # 本机 gh 需代理
 gh release create vX.Y.Z packages/meow-memorycarry-zcode-plugin-vX.Y.Z.zip --repo Logocceai/meow-memorycarry-zcode --title "vX.Y.Z" --notes "对照 CHANGELOG 摘要"
 ```
 
+## 发布记录(2026-09-18)
+
+v0.1.5 已发布:首屏讲清适用边界——日常长文本、只需当前窗口继续、且不需要跨窗口记忆 / 版本控制 / 本地记忆库 / 多机共享时,应当用内置 `/compact` 而不是本插件;新增对比报告中英双语(`docs/handoff-vs-compact.md` / `.en.md`,含成本对照、压缩比分层实测、场景判定、双方优劣与局限);README 首屏提示与 Roadmap 预告(下一个大版本做长处特化、短处学习与融合);`INSTALL-FOR-AI.md` 新增适用边界段并把"先讲边界"设为安装后第零步;`docs/user-guide.md` 新增「什么时候不该用它」一节;打包与核验清单纳入新报告中英两份(25 → 27 项)。
+
 ## 发布记录(2026-09-17)
 
 v0.1.4 已发布:交接笔记中英双语(`docs/handoff-notes.md` / `docs/handoff-notes.en.md`),README 新增「交接的时机与注意事项」一节,AI 按 `INSTALL-FOR-AI.md` 完成安装后主动引导用户阅读交接注意事项;打包与核验清单纳入两个新文档(23 → 25 项);`INSTALL-FOR-AI.md` 离线示例版本号纠正(此前停留在 v0.1.0)。
