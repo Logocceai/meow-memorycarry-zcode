@@ -80,6 +80,8 @@ const required = [
   "docs/user-guide.md",
   "docs/handoff-notes.md",
   "docs/handoff-notes.en.md",
+  "docs/handoff-vs-compact.md",
+  "docs/handoff-vs-compact.en.md",
   "docs/token-report.md",
   "scripts/install.ps1",
   "commands/handoff.md",

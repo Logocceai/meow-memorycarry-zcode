@@ -8,6 +8,21 @@ Let an AI coding agent **summarize and carry away** what a session learned, and 
 - 📺 Video tutorial: [ZCode local memory store and recall plugin](https://www.bilibili.com/video/BV182eF66EB9/) — install, usage and long-context benchmarks *(Chinese)*
 - License: MIT
 
+## First, the honest part: when to use the built-in `/compact` instead of this plugin
+
+**If all you want is to keep the current window going — everyday long-text work, context filling up but the task must finish in this window — and you do not need cross-window memory, version control, a local memory store or multi-machine sharing, then use ZCode's built-in `/compact`. It is clearly a better fit than `/handoff`.**
+
+The measured cost differs by two orders of magnitude: non-cached input **1,347 vs 252,819 tokens**, model time **25s vs 190s** (`/compact` is one model call; `/handoff` is a multi-step turn). In that situation this plugin is both slower and more expensive.
+
+**Conversely, these four things only `/handoff` can do, and `/compact` can do none of them:**
+
+1. **Cross-window** — the output is a file that a new window can load with `/recall`; a compact summary lives only in that one session.
+2. **Version control** — the memory store lives in the repo and travels with git: diffable, revertable, auditable; compact's product sits outside any git repository.
+3. **Local long-term memory** — layered files absorb and merge across windows, so knowledge thickens; compact only ever covers the current window.
+4. **Multi-machine sharing** — the store syncs with the repo; compact's product is not portable.
+
+So the question is not "which is better" but **whether you need those four things**. Full data, method and caveats (including 6 unverified items) → [handoff vs compact report](docs/handoff-vs-compact.md).
+
 ## The problem it solves
 
 Switching windows means losing context. When a session nears its context limit, or a task wraps up and you want a fresh window, everything valuable (decisions, lessons, where you stopped) is stranded in the old one. This plugin provides two commands:
@@ -124,6 +139,7 @@ Guardrails: one fact per line with a date, hard line limits, an `active → abso
 
 - [User guide](docs/user-guide.md) — install, interaction details of both commands, tier choices, FAQ, command cheat sheet *(Chinese)*
 - [Handoff notes](docs/handoff-notes.md) — when to hand off, and what to watch out for before, during and after (Chinese + English)
+- [handoff vs compact](docs/handoff-vs-compact.md) — when to use the built-in `/compact` instead of this plugin; measured cost, compression ratio and scenario guide (Chinese + English)
 - [Token savings and tier cost report](docs/token-report.md) — data, method and caveats from ten isolated experiments *(Chinese)*
 - [Tier system](skills/meow-handoff/docs/tier-system.md) — speed and depth axis definitions, the 9-combination matrix, syntax and extension rules *(Chinese)*
 - [Memory format spec](skills/meow-handoff/docs/format-spec.md) — frontmatter, naming, line limits, lifecycle, how tiers relate to format *(Chinese)*
@@ -142,12 +158,17 @@ scripts/package.mjs         # packaging script (builds the release zip)
 scripts/check-packages.mjs  # release package verifier
 docs/user-guide.md          # user guide
 docs/handoff-notes.md       # handoff notes: timing and cautions (Chinese + English)
+docs/handoff-vs-compact.md  # comparison with the built-in /compact: cost, ratio, scenarios (Chinese + English)
 docs/token-report.md        # token savings and tier cost report
 docs/releasing.md           # release process
 ```
 
 ## Roadmap
 
+**Teaser: the next major version is a "specialize, learn, merge" pass** — deepen the strengths of handoff (cross-window, versionable, accumulative, revertable), openly learn from compact's strengths (zero setup, low per-operation cost, recent messages kept verbatim, summary granularity), and fix the parts this plugin is worst at (unit cost, the timing judgement call, no automatic trigger). The direction is set; the details are not. The comparison report is the basis for that work.
+
+- [ ] **Specialize**: push the handoff strengths further — cross-window and cross-machine availability, quality control for the accumulating layers
+- [ ] **Learn**: absorb compact's advantages directly, cutting the per-operation cost and the reliance on a human timing call
 - [ ] codex support: skills under `~/.agents/skills/` (open standard read by ZCode/Codex), optional SessionStart/Stop hooks
 - [ ] dsh support: an AGENTS.md conventions snippet, complementary to dsh-meow-memory (which handles injection and retrieval; this plugin handles the handoff file format)
 - [ ] global user-level memory layer (preferences across projects)

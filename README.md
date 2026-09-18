@@ -8,6 +8,21 @@
 - 📺 视频教程:[ZCode 本地记忆存储与提取插件](https://www.bilibili.com/video/BV182eF66EB9/)(安装、使用与长上下文实测)
 - License: MIT
 
+## 先说清楚:什么情况下请用内置的 `/compact`,不要用本插件
+
+**如果你只是想让当前这个窗口继续跑下去——日常长文本、上下文快满了但任务还要在本窗口做完——并且不需要跨窗口记忆、不需要版本控制、不需要本地记忆库、不需要多机共享,那么请直接用 ZCode 内置的 `/compact`。它明显比 `/handoff` 更合适。**
+
+实测成本差两个量级:非缓存输入 **1,347 tokens vs 252,819 tokens**,模型耗时 **25 秒 vs 190 秒**(`/compact` 是一次模型调用,`/handoff` 是一轮多步操作)。这种场景下用本插件既慢又贵。
+
+**反过来,下面四件事只有 `/handoff` 能做,`/compact` 一件也做不到:**
+
+1. **跨窗口**——产物是文件,新窗口 `/recall` 可以载入;compact 的摘要只活在那一个会话里。
+2. **版本控制**——记忆库存进仓库随 git 走,可 diff、可回退、可审计;compact 的产物不在任何 git 仓库内。
+3. **本地长期记忆**——分层文件跨窗口吸收合并,知识随使用变厚;compact 每次只覆盖当前窗口。
+4. **多机共享**——记忆库跟仓库同步到别的机器;compact 的产物不可移植。
+
+所以这不是"谁更好"的问题,而是**你需不需要那四件事**的问题。完整数据、方法与口径(含 6 条未核实项)见 → [handoff 与 compact 对比报告](docs/handoff-vs-compact.md)。
+
 ## 解决什么问题
 
 换窗口 = 丢上下文。会话接近上下文上限、或一个任务收尾要开新窗口时,有价值的信息(决策、教训、断点)只留在旧窗口里。本插件提供两条指令:
@@ -124,6 +139,7 @@ AI 代理安装请读 [INSTALL-FOR-AI.md](INSTALL-FOR-AI.md)。
 
 - [使用手册](docs/user-guide.md) — 安装、两条指令的交互细节、档位选择、FAQ、命令速查
 - [交接笔记](docs/handoff-notes.md) — 什么时候该交接、交接前中后各要注意什么(中英双语)
+- [handoff 与 compact 对比](docs/handoff-vs-compact.md) — 什么时候该用内置 `/compact` 而不是本插件;成本、压缩比与场景判定的实测数据(中英双语)
 - [Token 节省与档位成本实测](docs/token-report.md) — 10 个隔离实验的数据、方法与口径
 - [档位体系(骨架)](skills/meow-handoff/docs/tier-system.md) — 速度轴与深度轴的定义、9 组合行为矩阵、调用语法与扩展规则
 - [记忆格式规范](skills/meow-handoff/docs/format-spec.md) — frontmatter、命名、行数上限、生命周期、档位与格式的关系
@@ -142,12 +158,17 @@ scripts/package.mjs         # 打包脚本(生成发布 zip)
 scripts/check-packages.mjs  # 发布包核验脚本
 docs/user-guide.md          # 用户手册
 docs/handoff-notes.md       # 交接笔记:时机与注意事项(中英双语)
+docs/handoff-vs-compact.md  # 与内置 /compact 的对比:成本、压缩比、场景判定(中英双语)
 docs/token-report.md        # Token 节省与档位成本实测报告
 docs/releasing.md           # 发布流程
 ```
 
 ## Roadmap
 
+**预告:下一个大版本会做一次"长处特化 + 短处学习 + 融合"**——把交接的长处(跨窗口、可版本化、可累积、可回退)做得更强,并正面学习 compact 的长处(零准备、单次低成本、近期原文保留、摘要颗粒度),再补上自己写得最差的几条(单位成本、时机判断门槛、无自动触发)。方向已定,细节未定;本次对比报告就是这次改造的依据。
+
+- [ ] **长处特化**:交接的强项继续加深——跨窗口与跨机器的记忆可用性、分层累积的质量控制
+- [ ] **短处学习**:正面吸收 compact 的优点,降低单次操作成本、减少对人工时机的依赖
 - [ ] codex 接入:技能放 `~/.agents/skills/`(开放标准,ZCode/Codex 共读),可选 SessionStart/Stop hooks
 - [ ] dsh 接入:AGENTS.md 约定片段,与 dsh-meow-memory 互补(后者管注入与检索,本插件管交接文件规范)
 - [ ] 全局用户级记忆层(用户偏好,跨项目)

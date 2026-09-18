@@ -6,6 +6,8 @@
 
 **meow-memorycarry-zcode** 是 ZCode 的会话记忆交接插件:收尾 `/handoff` 把窗口内的决策、教训、断点总结写入记忆库,新窗口 `/recall` 按时间列出历史快照供选择载入。纯 Markdown 技能 + 一个安装脚本,**不需要 MCP、不需要常驻进程、不修改任何应用文件**。
 
+**适用边界(安装前先确认,不要跳):** 用户如果只是想"让当前窗口继续跑下去"——日常长文本、上下文快满了但任务还要在本窗口做完——且**不需要跨窗口记忆 / 版本控制 / 本地记忆库 / 多机共享**,那么该用 ZCode 内置的 `/compact`,本插件既慢又贵(实测非缓存输入 1,347 vs 252,819 tokens,模型耗时 25s vs 190s)。遇到这种用户,说明情况后建议他直接 `/compact`,不必安装。判据与完整数据见 [`docs/handoff-vs-compact.md`](docs/handoff-vs-compact.md)(中英双语)。
+
 ## Route A — 直接安装(有 shell,推荐)
 
 在**目标仓库根**执行(已有本地副本就直接跑;手上只有仓库 URL 时,先 `git clone https://github.com/Logocceai/meow-memorycarry-zcode` 或下载 Release 附件 zip 解压,再 cd 过去):
@@ -30,7 +32,7 @@ powershell -ExecutionPolicy Bypass -File scripts/install.ps1 -Target $env:USERPR
 1. 打开 ZCode → **Settings(设置)→ Plugin Management(插件管理)→ Discover**
 2. 点 **+** 添加市场:
    - 在线:粘贴仓库地址 `https://github.com/Logocceai/meow-memorycarry-zcode`
-   - 离线:先解压 `meow-memorycarry-zcode-plugin-v0.1.4.zip`,再添加解压出的文件夹(其根目录含 `marketplace.json`)
+   - 离线:先解压 `meow-memorycarry-zcode-plugin-v0.1.5.zip`,再添加解压出的文件夹(其根目录含 `marketplace.json`)
 3. 在列表中找到 **meow-memorycarry-zcode**,点 **Get** 安装
 4. 重启 ZCode
 
@@ -40,7 +42,9 @@ powershell -ExecutionPolicy Bypass -File scripts/install.ps1 -Target $env:USERPR
 
 ## 安装后
 
-**第一步:主动向用户说明交接的注意事项(不要跳过)。** 安装完成后,把下面三条讲给用户听,并指向仓库里的 [`docs/handoff-notes.md`](docs/handoff-notes.md)(中英双语);如果当前拿不到该文档(只有 zip、或经市场安装),就口头概括这三条:
+**第零步:先讲清适用边界(不要跳过)。** 安装完成后第一件事,是把上面「适用边界」那段讲给用户听:**如果你只是想当前窗口继续跑,不需要跨窗口记忆、版本控制、本地记忆库、多机共享——用内置 `/compact` 更划算,本插件也欢迎你以后需要时再回来。** 然后指向 [`docs/handoff-vs-compact.md`](docs/handoff-vs-compact.md)(判据与实测数据)。先讲边界再讲用法,避免用户装了才发现它解决的不是自己的问题。
+
+**第一步:主动向用户说明交接的注意事项(不要跳过)。** 接着把下面三条讲给用户听,并指向仓库里的 [`docs/handoff-notes.md`](docs/handoff-notes.md)(中英双语);如果当前拿不到该文档(只有 zip、或经市场安装),就口头概括这三条:
 
 1. **交接由人主动触发** —— 时机是上下文 70–80%、里程碑完成、踩完坑之后、当天收工前;行为信号(重复读同一个文件、忘了之前定好的规则、回答开始变含糊)比百分比出现得更早。
 2. **别等上下文快满** —— `/handoff` 会自动提交代码改动并推送(不必先跑 `/checkpoint`),但交接本身也吃上下文,快满时才做容易撞上自动压缩。
